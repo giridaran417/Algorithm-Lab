@@ -1,0 +1,53 @@
+def isRowcolumnSafe(r1,c1,s1):
+    flag = 1
+    s2 =[]
+    r=c=0
+    
+    
+    if r1 == 0 and c1 == 0:
+        return 1
+    
+    while(len(s1) != 0):
+        #print(" sgf ")
+        (r,c) = s1[-1]
+        s2.append((r,c))
+        del s1[-1]
+        if r1 == r or c1 == c or abs(r1-r) == abs(c1-c):
+            flag = 0
+            break
+    
+    if r1 != r and c1 != c and abs(r1-r) != abs(c1-c):
+        flag = 1
+    
+    while(len(s2)!=0):
+        (r,c) = s2[-1]
+        s1.append((r,c))
+        del s2[-1]
+    
+    return flag
+
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    i=0
+    j=0
+    s1 = [] 
+    while(i<n and j<n):
+        #print("i",i,"j",j)
+        r = isRowcolumnSafe(i,j,s1)
+        if r==1:
+            s1.append((i,j))
+            #print("safe",i,j)
+            i+=1
+            j=0
+            
+        else:
+            j += 1
+        while(j>=n and len(s1)!=0):
+            (i,j) = s1[-1]
+            #print("pop",i,j)
+            del s1[-1]
+            j+=1
+        
+    print(s1)
